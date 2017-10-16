@@ -1,13 +1,34 @@
 <?php
 
-include_once 'connectDB.php';
-include_once 'config.php';
+    include_once 'connectDB.php';
+    include_once 'config.php';
 
-$email = $_POST['email'];
-$password = $_POST['password'];
+    if ( !empty($_POST) ) {
 
-$queryAdd = $pdo->query("Insert $email ")
+        // Recibo los 3 datos del formulario
 
+        $email = $_POST['email'];
+        $password =$_POST['password'];
+        $password_conf = $_POST['password_conf'];
+
+        if ("password" === "password_conf") {
+
+
+            $sql = "INSERT INTO clientes (email, password) VALUES (:email, :password)";
+
+            $result = $pdo->prepare($sql);
+
+            $result->execute([
+                'email' => $email,
+                'password' => $password,
+            ]);
+            header('Location: index.php');
+        }else{
+            echo '<script language="javascript">';
+            echo 'alert("")';
+            echo '</script>';
+        }
+    }
 ?>
 
 
@@ -36,12 +57,16 @@ $queryAdd = $pdo->query("Insert $email ")
     <form action="add.php" method="post">
         <div class="form-group">
             <label for="correo">Email</label>
-            <input class="form-control" type="email" id="correo" name="email">
+            <input class="form-control" type="email" id="correo" name="email" required>
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input class="form-control" type="password" id="password" name="password">
+            <input class="form-control" type="password" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="password_conf">Re-Type Password</label>
+            <input class="form-control" type="password" id="password_conf" name="password_conf" required>
         </div>
 
         <div class="form-group">

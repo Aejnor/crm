@@ -32,14 +32,16 @@
                 <th>ID</th>
                 <th>Email</th>
                 <th>Password</th>
+                <th>Edit</th>
 
             </tr>
             <?php
             while($row = $queryResult->fetch(PDO::FETCH_ASSOC) ):?>
                 <tr>
-                    <td><?=$row['id']?></td>
+                    <td><?=$row['ID']?></td>
                     <td><?=$row['email']?></td>
                     <td><?php echo $row['password']?></td>
+                    <td><a href="delete.php?id=<?=row['ID']?>" class="btn btn-danger">Eliminar</a></td>
                 </tr>
             <?php  endwhile; ?>
         </table>
